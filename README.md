@@ -85,11 +85,10 @@
 }
 ```
 ## 二级目录
+### request
 * method：GET
 * path：/course/:courseId
 * 说明：corseId为一级目录的id
-### request
-无
 ### response
 ```
 {
