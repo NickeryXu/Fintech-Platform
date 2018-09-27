@@ -156,7 +156,7 @@
 * path：/course/:courseId/:uid
 ```
 {
-    courseid: StringField,
+    id: StringField,
     uid: StringField,
     course: StringField,
     content: StringField,
