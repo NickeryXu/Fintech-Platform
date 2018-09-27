@@ -102,3 +102,31 @@ def course_me():
         returnObj['info'] = {'result': 500, 'info': '后台异常'}
     finally:
         return jsonify(returnObj)
+
+#提交作业
+@course.route('/course/<courseId>/<uid>', methods=['POST'])
+def homework_put(courseId, uid):
+    from models.user import USER
+    import time
+    returnObj = {}
+    try:
+        feedbackObj = {}
+        id = courseId
+        uid = uid
+        course = request.json.get('course')
+        content = request.json.get('content')
+        time_now = time.strftime('%Y-%m-%d %X', time.localtime())
+        feedbackObj['id'] = id
+        feedbackObj['uid'] = uid
+        feedbackObj['course'] = course
+        feedbackObj['content'] = content
+        feedbackObj['RecordTime'] = time_now
+        USER.objects(id=session['id']).update_one(push__feedbacks=feedbackObj)
+        returnObj['data'] = {}
+        returnObj['info'] = {'result': 1, 'info': '提交成功'}
+    except Exception as e:
+        print('我的课程:', e)
+        returnObj['data'] = {}
+        returnObj['info'] = {'result': 500, 'info': '后台异常'}
+    finally:
+        return jsonify(returnObj)

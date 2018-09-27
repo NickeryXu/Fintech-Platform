@@ -15,7 +15,6 @@ def user_login():
         data_user = USER.objects(username=username, password=password).first()
         if data_user:
             time_now = time.strftime('%Y-%m-%d %X', time.localtime())
-            print("time =", time_now)
             USER.objects(username=username).update(LastloginTime=time_now)
             session['id'] = str(data_user.id)
             session['username'] = data_user.username
