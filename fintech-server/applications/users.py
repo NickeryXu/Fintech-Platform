@@ -1,5 +1,6 @@
 from flask import Blueprint, jsonify, session, request
 from bson import ObjectId
+from auth import sign_check
 
 user = Blueprint('user', __name__)
 
@@ -31,6 +32,7 @@ def user_login():
         return jsonify(returnObj)
 
 #获取当前用户
+@sign_check()
 @user.route('/users/me', methods=['GET'])
 def user_me():
     from models.user import USER
@@ -95,6 +97,7 @@ def create_user():
         return jsonify(returnObj)
 
 #更改当前用户
+@sign_check()
 @user.route('/users/change', methods=['PUT'])
 def change_one():
     from models.user import USER

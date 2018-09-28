@@ -10,6 +10,7 @@ class courseInfo(EmbeddedDocument):
 
 class feedbackInfo(EmbeddedDocument):
     id = ObjectIdField()
+    uid = StringField()
     course = StringField()
     content = StringField()
     RecordTime = StringField()

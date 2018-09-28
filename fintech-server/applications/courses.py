@@ -1,9 +1,11 @@
 from flask import Blueprint, jsonify, session, request
 from bson import ObjectId
+from auth import sign_check
 
 course = Blueprint('course', __name__)
 
 #一级目录
+@sign_check()
 @course.route('/course', methods=['GET'])
 def course_series():
     from models.course import COURSE
@@ -28,6 +30,7 @@ def course_series():
         return jsonify(returnObj)
 
 #二级目录
+@sign_check()
 @course.route('/course/<courseId>', methods=['GET'])
 def course_list(courseId):
     from models.course import COURSE
@@ -51,6 +54,7 @@ def course_list(courseId):
         return jsonify(returnObj)
 
 #课程内容
+@sign_check()
 @course.route('/course/<courseId>/<uid>', methods=['GET'])
 def course_detail(courseId, uid):
     from models.course import COURSE
@@ -69,7 +73,17 @@ def course_detail(courseId, uid):
                 dataObj['remark'] = course['remark']
                 dataObj['datalink'] = course['datalink']
                 userObj = {'course': dataObj['course'], 'id': courseId, 'uid': uid}
-                USER.objects(id=session['id']).update_one(push__courses=userObj)
+                data_user = USER.objects(id=ObjectId(session['id'])).first()
+                data_courses = data_user.courses
+                i = 0
+                for n in data_courses:
+                    if n['id'] == courseId:
+                        n['uid'] = uid
+                        n['course'] = course['course']
+                        data_user.save()
+                        i = 1
+                if i != 1:
+                    USER.objects(id=ObjectId(session['id'])).update_one(push__courses=userObj)
         returnObj['data'] = dataObj
         returnObj['info'] = {'result': 1, 'info': '获取成功'}
     except Exception as e:
@@ -80,13 +94,14 @@ def course_detail(courseId, uid):
         return jsonify(returnObj)
 
 #我的课程
+@sign_check()
 @course.route('/course/me', methods=['GET'])
 def course_me():
     from models.user import USER
     returnObj = {}
     try:
         coursesObj = []
-        data_user = USER.objects(id=session['id']).first()
+        data_user = USER.objects(id=ObjectId(session['id'])).first()
         data_course = data_user['courses']
         for data in data_course:
             mycourse = {}
@@ -104,6 +119,7 @@ def course_me():
         return jsonify(returnObj)
 
 #提交作业
+@sign_check()
 @course.route('/course/<courseId>/<uid>', methods=['POST'])
 def homework_put(courseId, uid):
     from models.user import USER
@@ -121,7 +137,7 @@ def homework_put(courseId, uid):
         feedbackObj['course'] = course
         feedbackObj['content'] = content
         feedbackObj['RecordTime'] = time_now
-        USER.objects(id=session['id']).update_one(push__feedbacks=feedbackObj)
+        USER.objects(id=ObjectId(session['id'])).update_one(push__feedbacks=feedbackObj)
         returnObj['data'] = {}
         returnObj['info'] = {'result': 1, 'info': '提交成功'}
     except Exception as e:
