@@ -14,7 +14,9 @@
 }
 ```
 ### response
+
 无
+
 ## 用户登录
 * method：POST
 * path：/login
@@ -27,7 +29,9 @@
 }
 ```
 ### response
+
 无
+
 ## 更改当前用户信息
 ### request
 * method：PUT
@@ -51,14 +55,18 @@
 }
 ```
 ### response
+
 无
+
 ## 用户登出
 ### request
 * method：GET
 * path：/users/logout
 * 参数：无
 ### response
+
 无
+
 # 课程模块
 ## 一级目录
 ### request
@@ -88,7 +96,9 @@
 * path：/course/:courseId
 * 说明：corseId为一级目录的id
 ### request
+
 无
+
 ### response
 ```
 {
