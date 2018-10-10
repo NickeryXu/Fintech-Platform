@@ -1,0 +1,133 @@
+/* html,nav.transparent{background: #292929;} */
+.image-header {background: linear-gradient(#3374FF 60%, #363b3e 40%) !important;}
+  nav.transparent .nav-bar{ border: none; }
+.menu li a{ font-size: 16px;}
+.menu > li{margin-right: 42px; color: #fff; font-size: 16px;}
+.menu li a.reg{
+    background: transparent;
+    box-shadow: inset 0 0 0 2px #fff;
+    padding: 0 30px;
+    display: inline-block;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: background .2s ease-in-out,box-shadow .2s ease-in-out,color .2s ease-in-out,transform .2s ease-in-out;
+    line-height: 34px;
+    text-decoration: none;
+    border: 0;
+    cursor: pointer;
+    height: 34px;}
+  .image-slider .slides{ background: #ccefea}
+  .flex-direction-nav{ display: none}
+.image-bg .flex-control-nav li a{display: none}
+/* nav.transparent.fixed{ background: #000} */
+
+.fonts16{ font-size: 16px !important;}
+.container {
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+}
+@media (min-width: 768px) {
+  .container {
+    width: 750px;
+  }
+}
+@media (min-width: 992px) {
+  .container {
+    width: 970px;
+  }
+}
+@media (min-width: 1200px) {
+  .container {
+    width: 1170px;
+  }
+}
+h1.large {
+    font-size: 72px;
+    line-height: 80px;
+    font-weight: 100;
+}
+.lead {
+    margin-bottom: 20px;
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 1.4;
+
+}
+.feature.bordered {
+    padding: 32px;
+    border: 1px solid #ccc;
+}
+h3.uppercase {
+    letter-spacing: 6px;
+    margin-right: -6px;
+    font-weight: 100;
+}
+.navbar-nav { padding-right: 30px;}
+.navbar-nav li a.reg {
+    background: transparent;
+    box-shadow: inset 0 0 0 2px #fff;
+    padding: 0 30px;
+    display: inline-block;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: background .2s ease-in-out,box-shadow .2s ease-in-out,color .2s ease-in-out,transform .2s ease-in-out;
+    line-height: 34px;
+    text-decoration: none;
+    border: 0;
+    margin-top: 15px;
+    cursor: pointer;
+    height: 34px;
+}
+.btn{height: 50px;
+    line-height: 38px;
+    border: 2px solid #5edcd0;
+    background: #5edcd0;
+    color: #fff;
+    width: 100%;
+    font-size: 14px;
+    text-transform: uppercase;
+    font-weight:100;
+    letter-spacing: 3px;
+    border-radius: 0 !important;}
+.btn:hover{  color: #fff;}
+.panel-body{ padding:5px 35px 35px;}
+.form-group {
+    margin-bottom: 35px;
+}
+a.text-primary,a.text-primary:hover,a.text-primar:focus{ color: #5edcd0}
+.fade-half{ color: rgba(255, 255, 255, 0.56)}
+hr{    border-top: 1px solid  rgba(255, 255, 255, 0.16); margin-top: 0}
+.bg-white{ background: #fff; color: #666}
+.bg-white h1,.bg-white h2,.bg-white h3,.bg-white h4,.bg-white h5{ color: #333}
+
+  .feature.boxed {
+    padding: 32px;
+    background: #f8f8f8;
+    margin-bottom: 15px;
+}
+.fade-1-4{ height: 90px; overflow: hidden;}
+.c666{ color: #666}
+.c333{ color: #333}
+.middle_cont{ position: absolute; left: 240px;right: 50%;top:0; bottom: 0; background: #333}
+.right_cont{ position: absolute; left: 50%;right: 0;top:0; bottom: 0; background: #fff}
+.cont-box{ padding: 20px 20px 20px; }
+.cont-wp{overflow-y: auto;     height: calc(100vh - 60px); margin-top: 60px;}
+.enlarged .middle_cont{left: 0;}
+.titleft{ background: #eee; margin: 0; font-size: 15px; padding: 10px 20px; margin-bottom: 10px;  overflow: hidden;}
+.titmidd{ background: #222; color: #fff;margin: 0; font-size: 15px; padding: 0 10px; height: 44px;margin-bottom: 10px;  }
+.titmidd .btn-group{   float: right;}
+.titmidd .btn.btn-default,.titmidd  .open>.dropdown-toggle.btn-default:focus,.titmidd .open>.dropdown-toggle.btn-default:hover{
+  color: #fff;
+letter-spacing: 1px;
+margin-top: 2px;
+  background-color: #5fbeaa;
+  border-color: #5fbeaa;
+  height: 40px;    line-height: 22px; font-weight: 400; border: none}
+.btn-default.active.focus, .btn-default.active:focus, .btn-default.active:hover, .btn-default:active.focus, .btn-default:active:focus, .btn-default:active:hover, .open>.dropdown-toggle.btn-default.focus, .open>.dropdown-toggle.btn-default:focus, .open>.dropdown-toggle.btn-default:hover {
+    color: #fff;
+    background-color: #5fbeaa;
+    border-color: #5fbeaa;}
+.titmidd .btn-group .dropdown-menu{ left:auto;   right:0; border-radius: 0}
+.titright{font-size: 15px; padding: 0 10px; height: 44px;margin-bottom: 10px; background: #eee;}
