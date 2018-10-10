@@ -1,18 +1,20 @@
-from flask import Blueprint, jsonify, session, request
+from flask import Blueprint, jsonify, session, request, render_template, redirect
 from bson import ObjectId
 from auth import sign_check
 
 user = Blueprint('user', __name__)
 
 #登录
-@user.route('/login', methods=['POST'])
+@user.route('/login', methods=['GET', 'POST'])
 def user_login():
+    if request.method == 'GET':
+        return render_template('login.html')
     from models.user import USER
     import time
     returnObj = {}
     try:
-        username = request.json.get('username')
-        password = request.json.get('password')
+        username = request.form.get('username')
+        password = request.form.get('password')
         data_user = USER.objects(username=username, password=password).first()
         if data_user:
             time_now = time.strftime('%Y-%m-%d %X', time.localtime())
@@ -29,7 +31,7 @@ def user_login():
         returnObj['data'] = {}
         returnObj['info'] = {'result': 500, 'info': '后台异常'}
     finally:
-        return jsonify(returnObj)
+        return redirect('/course')
 
 #获取当前用户
 @sign_check()
@@ -57,8 +59,10 @@ def user_me():
         return jsonify(returnObj)
 
 #注册
-@user.route('/sign', methods=['POST'])
+@user.route('/sign', methods=['GET', 'POST'])
 def create_user():
+    if request.method == 'GET':
+        return render_template('index.html')
     from models.user import USER
     returnObj = {}
     try:

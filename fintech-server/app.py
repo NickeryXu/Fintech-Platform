@@ -1,4 +1,4 @@
-from flask import Flask, json, redirect
+from flask import Flask, json, session, render_template, redirect, url_for
 from mongoengine import connect
 from flask_cors import *
 import config
@@ -10,7 +10,7 @@ class DecimalEncoder(json.JSONEncoder):
             return str(o)
         return super(DecimalEncoder, self).default(o)
 
-app = Flask('digest', static_folder='./assets', template_folder='./templates')
+app = Flask('digest', static_folder='./static', template_folder='./templates')
 app.config.from_object(config)
 app.json_encoder = DecimalEncoder
 CORS(app, supports_credentials=True)
@@ -22,3 +22,9 @@ def register_blueprints():
         app.register_blueprint(blueprint)
 
 register_blueprints()
+
+@app.route('/')
+def index():
+    if 'id' in session:
+        return redirect(url_for('course.course_series'))
+    return redirect(url_for('user.user_login'))

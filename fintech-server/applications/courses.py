@@ -1,4 +1,4 @@
-from flask import Blueprint, jsonify, session, request
+from flask import Blueprint, jsonify, session, request, render_template
 from bson import ObjectId
 from auth import sign_check
 
@@ -27,7 +27,7 @@ def course_series():
         returnObj['data'] = {}
         returnObj['info'] = {'result': 500, 'info': '后台异常'}
     finally:
-        return jsonify(returnObj)
+        return render_template('course.html', courses=returnObj['data']['courses'])
 
 #二级目录
 @sign_check()

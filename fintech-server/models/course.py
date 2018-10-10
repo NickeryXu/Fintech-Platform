@@ -3,20 +3,20 @@ from app import app
 
 connect('fintech', host=app.config['MONGODB_HOST'], port=app.config['MONGODB_PORT'])
 
+class envInfo(EmbeddedDocument):
+    envname = StringField()
+    envlink = StringField()
+
 class courseInfo(EmbeddedDocument):
     uid = StringField()
     course = StringField()
     description = StringField()
     remark = StringField()
     datalink = StringField()
-
-class envInfo(EmbeddedDocument):
-    envname = StringField()
-    envlink = StringField()
+    env = ListField(EmbeddedDocumentField(envInfo))
 
 class detailInfo(EmbeddedDocument):
     courses = ListField(EmbeddedDocumentField(courseInfo))
-    env = ListField(EmbeddedDocumentField(envInfo))
 
 class COURSE(Document):
     meta = {"collection": "course"}
