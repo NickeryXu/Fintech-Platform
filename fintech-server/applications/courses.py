@@ -51,7 +51,7 @@ def course_list(courseId):
         returnObj['data'] = {}
         returnObj['info'] = {'result': 500, 'info': '后台异常'}
     finally:
-        return jsonify(returnObj)
+        return render_template('learn.html', courses=returnObj['data']['courses'])
 
 #课程内容
 @sign_check()
