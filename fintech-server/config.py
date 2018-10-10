@@ -1,4 +1,4 @@
-HOST = "192.168.0.167"
+HOST = "0.0.0.0"
 PORT = 8005
 DEBUG = True
 MONGODB_HOST = "localhost"

@@ -10,7 +10,7 @@ class DecimalEncoder(json.JSONEncoder):
             return str(o)
         return super(DecimalEncoder, self).default(o)
 
-app = Flask('digest', static_folder='./static', template_folder='./templates')
+app = Flask('digest', static_folder='./assets', template_folder='./templates')
 app.config.from_object(config)
 app.json_encoder = DecimalEncoder
 CORS(app, supports_credentials=True)
