@@ -57,36 +57,11 @@
                           <p class="c666 p-l-r-20">
         In this lesson, you will learn how to set up a CSS file, and how to create CSS selectors, and how to set up CSS rule sets.
                           </p>
+                             {% for course in courses %}
                             <li class="has_sub">
-                                <a href="#" class="waves-effect"><span>1. Intro to CSS </span> </a>
+                                <a href="#" class="waves-effect"><span>{{ course.course }}</span> </a>
                             </li>
-                            <li class="has_sub">
-                                <a href="#" class="waves-effect"><span>2. Inline Styles </span> </a>
-                            </li>
-                            <li class="has_sub">
-                                <a href="#" class="waves-effect"><span>3. Dashboard </span> </a>
-                            </li>
-                            <li class="has_sub">
-                                <a href="#" class="waves-effect"><span>4. Dashboard </span> </a>
-                            </li>
-                            <li class="has_sub">
-                                <a href="#" class="waves-effect"><span>5. Dashboard </span> </a>
-                            </li>
-                            <li class="has_sub">
-                                <a href="#" class="waves-effect"><span>6. Dashboard </span> </a>
-                            </li>
-                            <li class="has_sub">
-                                <a href="#" class="waves-effect"><span>7. Dashboard </span> </a>
-                            </li>
-                            <li class="has_sub">
-                                <a href="#" class="waves-effect"><span>8. Dashboard </span> </a>
-                            </li>
-                            <li class="has_sub">
-                                <a href="#" class="waves-effect"><span>9. Dashboard </span> </a>
-                            </li>
-                            <li class="has_sub">
-                                <a href="#" class="waves-effect"><span>10. Dashboard </span> </a>
-                            </li>
+                            {% endfor %}
                         </ul>
                         <div class="clearfix"></div>
                     </div>
@@ -109,105 +84,66 @@
                     <div class="btn-group">
                         <button type="button" class="btn btn-default dropdown-toggle waves-effect waves-light" data-toggle="dropdown" aria-expanded="false">开始运行 <span class="caret"></span></button>
                         <ul class="dropdown-menu" role="menu">
-                            <li><a href="#">Linux环境</a></li>
-                            <li><a href="#">Nodejs环境</a></li>
-                            <li><a href="#">Nginx服务器</a></li>
-                            <li><a href="#">Python3环境</a></li>
+                            {% for env in course.env %}
+                            <li><a href={{ env.envlink }}>{{ env.envname }}</a></li>
+                            {% endfor %}
                         </ul>
                     </div>
                   </div>
-                  	<div class="cont-box">
-                  实验目的
-                  了解何为C判断，以及C判断的结构和要求
-
-                  实验原理
-                <h3>  一、C判断的结构及要求</h3>
-                  <hr>
-                  指定一个或多个要评估或测试的条件，以及条件为真时要执行的语句（必需的）和条件为假时要执行的语句（可选的）。C 语言把任何非零和非空的值假定为 true，把零或 null 假定为 false。
-
-                  <h3>二、判断的基本结构</h3>
-                    <hr>
-                  实验目的
-                  了解何为C判断，以及C判断的结构和要求
-
-                  实验原理
-                  <h3>一、C判断的结构及要求</h3>
-                  <hr>
-                  指定一个或多个要评估或测试的条件，以及条件为真时要执行的语句（必需的）和条件为假时要执行的语句（可选的）。C 语言把任何非零和非空的值假定为 true，把零或 null 假定为 false。
-
-                  <h3>二、判断的基本结构</h3>
-                  实验目的
-                  了解何为C判断，以及C判断的结构和要求
-
-                  <h4>实验原理</h4>
-                  一、C判断的结构及要求
-
-                  指定一个或多个要评估或测试的条件，以及条件为真时要执行的语句（必需的）和条件为假时要执行的语句（可选的）。C 语言把任何非零和非空的值假定为 true，把零或 null 假定为 false。
-
-                  二、判断的基本结构
-                  实验目的
-                  了解何为C判断，以及C判断的结构和要求
-
-                  实验原理
-                  一、C判断的结构及要求
-
-                  指定一个或多个要评估或测试的条件，以及条件为真时要执行的语句（必需的）和条件为假时要执行的语句（可选的）。C 语言把任何非零和非空的值假定为 true，把零或 null 假定为 false。
-
-                  二、判断的基本结构
-                  	</div>
+                  	<div class="cont-box">{{ course.datalink }}</div>
 								</div>
 							</div>
   <!-- middle_cont end -->
 
 							<div class="right_cont">
                   <div class="cont-wp">
-                  <div class=" titright">
-                    <ul class="nav nav-tabs">
-                        <li class="">
-                            <a href="#home" data-toggle="tab" aria-expanded="false">
-                                <span class="visible-xs"><i class="fa fa-home"></i></span>
-                                <span class="hidden-xs">Home</span>
-                            </a>
-                        </li>
-                        <li class="active">
-                            <a href="#profile" data-toggle="tab" aria-expanded="true">
-                                <span class="visible-xs"><i class="fa fa-user"></i></span>
-                                <span class="hidden-xs">Profile</span>
-                            </a>
-                        </li>
-                        <li class="">
-                            <a href="#messages" data-toggle="tab" aria-expanded="false">
-                                <span class="visible-xs"><i class="fa fa-envelope-o"></i></span>
-                                <span class="hidden-xs">Messages</span>
-                            </a>
-                        </li>
-                        <li class="">
-                            <a href="#settings" data-toggle="tab" aria-expanded="false">
-                                <span class="visible-xs"><i class="fa fa-cog"></i></span>
-                                <span class="hidden-xs">Settings</span>
-                            </a>
-                        </li>
-                    </ul>
-                  </div>
+                  <!--<div class=" titright">-->
+                    <!--<ul class="nav nav-tabs">-->
+                        <!--<li class="">-->
+                            <!--<a href="#home" data-toggle="tab" aria-expanded="false">-->
+                                <!--<span class="visible-xs"><i class="fa fa-home"></i></span>-->
+                                <!--<span class="hidden-xs">Home</span>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                        <!--<li class="active">-->
+                            <!--<a href="#profile" data-toggle="tab" aria-expanded="true">-->
+                                <!--<span class="visible-xs"><i class="fa fa-user"></i></span>-->
+                                <!--<span class="hidden-xs">Profile</span>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                        <!--<li class="">-->
+                            <!--<a href="#messages" data-toggle="tab" aria-expanded="false">-->
+                                <!--<span class="visible-xs"><i class="fa fa-envelope-o"></i></span>-->
+                                <!--<span class="hidden-xs">Messages</span>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                        <!--<li class="">-->
+                            <!--<a href="#settings" data-toggle="tab" aria-expanded="false">-->
+                                <!--<span class="visible-xs"><i class="fa fa-cog"></i></span>-->
+                                <!--<span class="hidden-xs">Settings</span>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                    <!--</ul>-->
+                  <!--</div>-->
                   <!--titright  -->
-                  	<div class="cont-box tab-content">
-                      <div class="tab-pane" id="home">
-                          <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim.</p>
-                          <p>Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt.Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim.</p>
-                      </div>
-                      <div class="tab-pane active" id="profile">
-                          <p>Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt.Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim.</p>
-                          <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim.</p>
-                      </div>
-                      <div class="tab-pane" id="messages">
-                          <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim.</p>
-                          <p>Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt.Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim.</p>
-                      </div>
-                      <div class="tab-pane" id="settings">
-                          <p>Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt.Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim.</p>
-                          <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim.</p>
-                      </div>
-                    </div>
+                  	<!--<div class="cont-box tab-content">-->
+                      <!--<div class="tab-pane" id="home">-->
+                          <!--<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim.</p>-->
+                          <!--<p>Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt.Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim.</p>-->
+                      <!--</div>-->
+                      <!--<div class="tab-pane active" id="profile">-->
+                          <!--<p>Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt.Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim.</p>-->
+                          <!--<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim.</p>-->
+                      <!--</div>-->
+                      <!--<div class="tab-pane" id="messages">-->
+                          <!--<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim.</p>-->
+                          <!--<p>Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt.Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim.</p>-->
+                      <!--</div>-->
+                      <!--<div class="tab-pane" id="settings">-->
+                          <!--<p>Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt.Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim.</p>-->
+                          <!--<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim.</p>-->
+                      <!--</div>-->
+                    <!--</div>-->
                 </div>
 							</div>
               <!-- right_cont end -->
