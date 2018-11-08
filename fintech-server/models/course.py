@@ -1,7 +1,7 @@
 from mongoengine import *
 from app import app
 
-connect('fintech', host=app.config['MONGODB_HOST'], port=app.config['MONGODB_PORT'])
+connect('fintech', host=app.config['MONGODB_HOST'], port=app.config['MONGODB_PORT'], username=app.config['USERNAME'], password=app.config['PASSWORD'], authentication_source='fintech')
 
 class envInfo(EmbeddedDocument):
     envname = StringField()
