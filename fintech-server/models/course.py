@@ -18,6 +18,17 @@ class courseInfo(EmbeddedDocument):
 class detailInfo(EmbeddedDocument):
     courses = ListField(EmbeddedDocumentField(courseInfo))
 
+class coursesInfo(EmbeddedDocumentField):
+    uid = StringField()
+    course = StringField()
+    description = StringField()
+    datalink = StringField()
+    content = StringField()
+    env = ListField(EmbeddedDocumentField(envInfo))
+
+# class uidInfo(EmbeddedDocument):
+
+
 class COURSE(Document):
     meta = {"collection": "course"}
     teacher = StringField()
@@ -25,3 +36,4 @@ class COURSE(Document):
     course_description = StringField()
     course_tag = StringField()
     detail = EmbeddedDocumentField(detailInfo)
+    courses = DictField()

@@ -152,51 +152,59 @@ def homework_put(courseId, uid):
 @course.route('/course/<courseId>', methods=['GET'])
 def course_detail(courseId):
     from models.course import COURSE
-    from models.user import USER
+    # from models.user import USER
     returnObj = {}
     try:
         courseId = ObjectId(courseId)
         data_course = COURSE.objects(id=courseId).first()
         courseArray = []
-        for data in data_course.detail.courses:
+        courses_detail = data_course.courses
+        for key, value in courses_detail.items():
             dataObj = {}
-            dataObj['uid'] = data['uid']
-            dataObj['course'] = data['course']
+            dataObj['courseId'] = str(courseId)
+            dataObj['uid'] = key
+            dataObj['course'] = value['course']
             courseArray.append(dataObj)
-        data_user = USER.objects(id=session['id']).first()
-        n = 0
-        courses = data_user.courses
-        for course in courses:
-            if course['id'] == courseId:
-                n = course['uid']
-        if n == 0:
-            uid = 1
-        else:
-            uid = n
-        courses_detail = data_course.detail.courses
-        courseObj = {}
-        for course in courses_detail:
-            if course['uid'] == uid:
-                courseObj['uid'] = uid
-                courseObj['course'] = course['course']
-                courseObj['description'] = course['description']
-                courseObj['remark'] = course['remark']
-                courseObj['datalink'] = course['datalink']
-                courseObj['env'] = course['env']
-                userObj = {'course': courseObj['course'], 'id': courseId, 'uid': uid}
-                data_user = USER.objects(id=ObjectId(session['id'])).first()
-                data_courses = data_user.courses
-                i = 0
-                for n in data_courses:
-                    if n['id'] == courseId:
-                        n['uid'] = uid
-                        n['course'] = course['course']
-                        data_user.save()
-                        i = 1
-                if i != 1:
-                    USER.objects(id=ObjectId(session['id'])).update_one(push__courses=userObj)
+        # 查询课程历史记录
+        # data_user = USER.objects(id=session['id']).first()
+        # n = 0
+        # courses = data_user.courses
+        # for course in courses:
+        #     if course['id'] == courseId:
+        #         n = course['uid']
+        # if n == 0:
+        #     uid = 1
+        # else:
+        #     uid = n
         returnObj['courses'] = courseArray
-        returnObj['course'] = courseObj
+        uid = request.args.get('uid')
+        # print(uid)
+        if not uid:
+            returnObj['course'] = {}
+        else:
+            courseObj = {}
+            course = courses_detail[uid]
+            courseObj['uid'] = uid
+            courseObj['course'] = course['course']
+            courseObj['description'] = course['description']
+            # courseObj['remark'] = course['remark']
+            courseObj['datalink'] = course['datalink']
+            courseObj['content'] = course['content']
+            courseObj['env'] = course['env']
+            # userObj = {'course': courseObj['course'], 'id': courseId, 'uid': uid}
+            # data_user = USER.objects(id=ObjectId(session['id'])).first()
+            # data_courses = data_user.courses
+            # i = 0
+            # for n in data_courses:
+            #     if n['id'] == courseId:
+            #         n['uid'] = uid
+            #         n['course'] = course['course']
+            #         data_user.save()
+            #         i = 1
+            # if i != 1:
+            #     USER.objects(id=ObjectId(session['id'])).update_one(push__courses=userObj)
+            returnObj['course'] = courseObj
+            # print('course =', courseObj)
     except Exception as e:
         print('课程内容:', e)
         returnObj['data'] = {}

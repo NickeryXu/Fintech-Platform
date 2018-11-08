@@ -1,6 +1,6 @@
 from flask import Flask, json, session, render_template, redirect, url_for
 from mongoengine import connect
-from flask_cors import *
+# from flask_cors import *
 import config
 import decimal
 
@@ -13,7 +13,7 @@ class DecimalEncoder(json.JSONEncoder):
 app = Flask('digest', static_folder='./static', template_folder='./templates')
 app.config.from_object(config)
 app.json_encoder = DecimalEncoder
-CORS(app, supports_credentials=True)
+# CORS(app, supports_credentials=True)
 
 def register_blueprints():
     from applications.users import user
