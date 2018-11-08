@@ -38,7 +38,7 @@
                         <a href="#" id="btn-fullscreen" class="waves-effect waves-light"><i class="icon-size-fullscreen">全屏</i></a>
                     </li>
                       <li >
-                        <a href="/" >课程中心</a>
+                        <a href="/course" >课程中心</a>
                       </li>
                   </ul>
               <!--/.nav-collapse -->
@@ -83,7 +83,7 @@
                         <button type="button" class="btn btn-default dropdown-toggle waves-effect waves-light" data-toggle="dropdown" aria-expanded="false">开始运行 <span class="caret"></span></button>
                         <ul class="dropdown-menu" role="menu">
                             {% for env in course.env %}
-                            <li><a href={{ env.envlink }}>{{ env.envname }}</a></li>
+                            <li><a href=/course/{{ course.courseId }}?uid={{ course.uid }}&envname={{ env.envname }}>{{ env.envname }}</a></li>
                             {% endfor %}
                         </ul>
                     </div>
@@ -97,7 +97,7 @@
 
 							<div class="right_cont">
                   <div class="cont-wp">
-                      <iframe width="100%" height="100%" src="http://localhost:8888/notebooks/Fintech_Python.ipynb"></iframe>
+                      <iframe width="100%" height="100%" src={{ env.envlink }}></iframe>
                   <!--<div class=" titright">-->
                     <!--<ul class="nav nav-tabs">-->
                         <!--<li class="">-->

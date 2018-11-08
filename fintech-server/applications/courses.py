@@ -184,6 +184,7 @@ def course_detail(courseId):
         else:
             courseObj = {}
             course = courses_detail[uid]
+            courseObj['courseId'] = str(courseId)
             courseObj['uid'] = uid
             courseObj['course'] = course['course']
             courseObj['description'] = course['description']
@@ -205,10 +206,16 @@ def course_detail(courseId):
             #     USER.objects(id=ObjectId(session['id'])).update_one(push__courses=userObj)
             returnObj['course'] = courseObj
             # print('course =', courseObj)
+        envname = request.args.get('envname')
+        returnObj['env'] = {}
+        if envname:
+            for env in course['env']:
+                if env['envname'] == envname:
+                    returnObj['env'] = {'envname': envname, 'envlink': env['envlink']}
     except Exception as e:
         print('课程内容:', e)
         returnObj['data'] = {}
         returnObj['info'] = {'result': 500, 'info': '后台异常'}
     finally:
-        return render_template('learn.html', courses=returnObj['courses'], course=returnObj['course'])
+        return render_template('learn.html', courses=returnObj['courses'], course=returnObj['course'], env=returnObj['env'])
 
