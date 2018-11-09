@@ -151,8 +151,12 @@ def homework_put(courseId, uid):
 @sign_check()
 @course.route('/course/<courseId>', methods=['GET'])
 def course_detail(courseId):
+    import hashlib
+    import json
+    # from websocket import create_connection
+    import urllib
     from models.course import COURSE
-    # from models.user import USER
+    from models.user import USER
     returnObj = {}
     try:
         courseId = ObjectId(courseId)
@@ -209,9 +213,28 @@ def course_detail(courseId):
         envname = request.args.get('envname')
         returnObj['env'] = {}
         if envname:
-            for env in course['env']:
-                if env['envname'] == envname:
-                    returnObj['env'] = {'envname': envname, 'envlink': env['envlink']}
+            sha = hashlib.sha1()
+            userid = session.get('id')
+            sha.update(userid.encode('utf-8'))
+            sha.update(str(courseId).encode('utf-8'))
+            Oid = sha.hexdigest()[0:16]
+            # ws = create_connection('http://api.datadynamic.io/api/v1/instance/' + ownerid + '/eureka')
+            # result = ws.recv()
+            # http://api.datadynamic.io/api/v1/instance/aacc1122344deerr/eureka
+            url = 'http://api.datadynamic.io/api/v1/instance/' + Oid + '/eureka'
+            req = urllib.request.Request(url=url, data={})
+            res = urllib.request.urlopen(req)
+            res = json.loads(res.read())[0]
+            Cid = res['id'][0:16]
+            link = 'http://' + Cid + '-8888-env1.env.datadynamic.io/notebooks/Welcome.ipynb'
+            envObj = {Oid: link}
+            USER.objects(id=ObjectId(session['id'])).update_one(push__envlink=envObj)
+            # for env in course['env']:
+            #     if env['envname'] == envname:
+            #         env['envlink'] = link
+            #         returnObj['env'] = {'envname': envname, 'envlink': env['envlink']}
+            returnObj['env'] = {'envname': envname, 'envlink': link}
+            print(link)
     except Exception as e:
         print('课程内容:', e)
         returnObj['data'] = {}
