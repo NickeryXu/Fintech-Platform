@@ -157,6 +157,7 @@ def course_detail(courseId):
     # from websocket import create_connection
     import urllib
     import time
+    import operator
     from models.course import COURSE
     from models.user import USER
     returnObj = {}
@@ -171,6 +172,7 @@ def course_detail(courseId):
             dataObj['uid'] = key
             dataObj['course'] = value['course']
             courseArray.append(dataObj)
+        courseArray.sort(key=operator.itemgetter('uid'))
         returnObj['courses'] = courseArray
         uid = request.args.get('uid')
         # print(uid)
