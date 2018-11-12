@@ -1,5 +1,7 @@
 from flask import session, jsonify
 from functools import wraps
+from models.user import USER
+import time
 
 def sign_check():
     def sign_decorator(f):
@@ -22,3 +24,26 @@ def sign_check():
             return f(*args, **kwargs)
         return sign_function
     return sign_decorator
+
+def Oid_check():
+    def Oid_decorator(f):
+        @wraps(f)
+        def Oid_function(*args, **kwargs):
+            try:
+                data = USER.objects(id=session['id']).first()
+                envlink = data.envlink
+                for Oid, env in envlink.items():
+                    time_now = time.strftime('%Y-%m-%d %X', time.gmtime())
+                    if env[1] < time_now:
+                        print('Oid clear!', Oid)
+                        del envlink[Oid]
+                        continue
+                USER.objects(id=session['id']).update_one(envlink=envlink)
+            except Exception as e:
+                print("Oid_check's error:", e)
+            finally:
+                pass
+            return f(*args, **kwargs)
+        return Oid_function
+    return Oid_decorator
+

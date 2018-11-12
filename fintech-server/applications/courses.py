@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, session, request, render_template
 from bson import ObjectId
-from auth import sign_check
+from auth import sign_check, Oid_check
 
 course = Blueprint('course', __name__)
 
@@ -149,12 +149,14 @@ def homework_put(courseId, uid):
 
 #课程内容
 @sign_check()
+# @Oid_check()
 @course.route('/course/<courseId>', methods=['GET'])
 def course_detail(courseId):
     import hashlib
     import json
     # from websocket import create_connection
     import urllib
+    import time
     from models.course import COURSE
     from models.user import USER
     returnObj = {}
@@ -169,17 +171,6 @@ def course_detail(courseId):
             dataObj['uid'] = key
             dataObj['course'] = value['course']
             courseArray.append(dataObj)
-        # 查询课程历史记录
-        # data_user = USER.objects(id=session['id']).first()
-        # n = 0
-        # courses = data_user.courses
-        # for course in courses:
-        #     if course['id'] == courseId:
-        #         n = course['uid']
-        # if n == 0:
-        #     uid = 1
-        # else:
-        #     uid = n
         returnObj['courses'] = courseArray
         uid = request.args.get('uid')
         # print(uid)
@@ -192,49 +183,53 @@ def course_detail(courseId):
             courseObj['uid'] = uid
             courseObj['course'] = course['course']
             courseObj['description'] = course['description']
-            # courseObj['remark'] = course['remark']
             courseObj['datalink'] = course['datalink']
             courseObj['content'] = course['content']
             courseObj['env'] = course['env']
-            # userObj = {'course': courseObj['course'], 'id': courseId, 'uid': uid}
-            # data_user = USER.objects(id=ObjectId(session['id'])).first()
-            # data_courses = data_user.courses
-            # i = 0
-            # for n in data_courses:
-            #     if n['id'] == courseId:
-            #         n['uid'] = uid
-            #         n['course'] = course['course']
-            #         data_user.save()
-            #         i = 1
-            # if i != 1:
-            #     USER.objects(id=ObjectId(session['id'])).update_one(push__courses=userObj)
             returnObj['course'] = courseObj
             # print('course =', courseObj)
         envname = request.args.get('envname')
         returnObj['env'] = {}
         if envname:
+            # 先检查数据库中是否有过期的环境，有就删掉
+            data_user = USER.objects(id=ObjectId(session['id'])).first()
+            data_Oid = data_user.envlink
+            for OID in list(data_Oid.keys()):
+                time_now = time.strftime('%Y-%m-%d %X', time.gmtime())
+                if data_Oid[OID][1] < time_now:
+                    del data_Oid[OID]
+                    print('Expired Oid clear!', OID)
+                    continue
+            USER.objects(id=session['id']).update_one(envlink=data_Oid)
+            # 利用SHA加密取前16位
             sha = hashlib.sha1()
             userid = session.get('id')
             sha.update(userid.encode('utf-8'))
             sha.update(str(courseId).encode('utf-8'))
             Oid = sha.hexdigest()[0:16]
-            # ws = create_connection('http://api.datadynamic.io/api/v1/instance/' + ownerid + '/eureka')
-            # result = ws.recv()
-            # http://api.datadynamic.io/api/v1/instance/aacc1122344deerr/eureka
-            url = 'http://api.datadynamic.io/api/v1/instance/' + Oid + '/eureka'
-            req = urllib.request.Request(url=url, data={})
-            res = urllib.request.urlopen(req)
-            res = json.loads(res.read())[0]
-            Cid = res['id'][0:16]
-            link = 'http://' + Cid + '-8888-env1.env.datadynamic.io/notebooks/Welcome.ipynb'
-            envObj = {Oid: link}
-            USER.objects(id=ObjectId(session['id'])).update_one(push__envlink=envObj)
-            # for env in course['env']:
-            #     if env['envname'] == envname:
-            #         env['envlink'] = link
-            #         returnObj['env'] = {'envname': envname, 'envlink': env['envlink']}
+            data_user = USER.objects(id=ObjectId(session['id'])).first()
+            data_Oid = data_user.envlink
+            # 检查某环境是否已经存在，若存在则直接调用地址
+            if Oid in data_Oid.keys():
+                link = data_Oid[Oid][0]
+            else:
+                # ws = create_connection('http://api.datadynamic.io/api/v1/instance/' + ownerid + '/eureka')
+                # result = ws.recv()
+                # 使用生成的Oid获取Cid
+                url = 'http://api.datadynamic.io/api/v1/instance/' + Oid + '/eureka'
+                req = urllib.request.Request(url=url, data={})
+                res = urllib.request.urlopen(req)
+                res = json.loads(res.read())[0]
+                print(res)
+                Cid = res['id'][0:16]
+                expires_at = res['expires_at']
+                expire = expires_at[0:10] + ' ' + expires_at[11:19]
+                # 拼接出环境地址存入数据库并发送至前端
+                link = 'http://' + Cid + '-8888-env1.env.datadynamic.io/notebooks/Welcome.ipynb'
+                envObj = {Oid: [link, expire]}
+                USER.objects(id=ObjectId(session['id'])).update_one(envlink=envObj)
             returnObj['env'] = {'envname': envname, 'envlink': link}
-            print(link)
+            # print(link)
     except Exception as e:
         print('课程内容:', e)
         returnObj['data'] = {}
