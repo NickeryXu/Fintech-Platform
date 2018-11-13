@@ -23,13 +23,13 @@ html,body{ position: relative;}
     min-width: 100%;
     min-height: 100%;
 }
-.main-container{  position: absolute;
+.main-container.indexbox{  position: absolute;
   top: 0;
   right: 0;
   left: 0;
   bottom: 0;}
   nav.transparent .nav-bar{ border: none; }
-  .navbar-default{     background-color: rgba(0,0,0,0) !important}
+  .navbar-default.indextopbg{     background-color: rgba(0,0,0,0) !important}
 
 .image-header {background: linear-gradient(#3374FF 60%, #363b3e 40%) !important;}
   nav.transparent .nav-bar{ border: none; }
