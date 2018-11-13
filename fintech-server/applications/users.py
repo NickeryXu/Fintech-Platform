@@ -23,6 +23,7 @@ def user_login():
             session['username'] = data_user.username
             returnObj['data'] = {}
             returnObj['info'] = {'result': 1, 'info': '登陆成功'}
+            return redirect('/course')
         else:
             returnObj['data'] = {}
             returnObj['info'] = {'result': 400, 'info': '登录失败'}
@@ -30,8 +31,6 @@ def user_login():
         print('user_login:', e)
         returnObj['data'] = {}
         returnObj['info'] = {'result': 500, 'info': '后台异常'}
-    finally:
-        return redirect('/course')
 
 #获取当前用户
 @sign_check()
