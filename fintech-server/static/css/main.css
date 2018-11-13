@@ -128,7 +128,7 @@ h3.uppercase {
 .form-group {
     margin-bottom: 35px;
 }
-a.text-primary,a.text-primary:hover,a.text-primar:focus{ color: #5edcd0}
+a.text-primary,a.text-primary:hover,a.text-primary:focus{ color: #00AEAE}
 .fade-half{ color: rgba(255, 255, 255, 0.56)}
 hr{    border-top: 1px solid  rgba(255, 255, 255, 0.16); margin-top: 0}
 .bg-white{ background: #fff; color: #666}
