@@ -5,8 +5,8 @@ from auth import sign_check, Oid_check
 course = Blueprint('course', __name__)
 
 #一级目录
-@sign_check()
 @course.route('/course', methods=['GET'])
+@sign_check()
 def course_series():
     from models.course import COURSE
     returnObj = {}
@@ -94,8 +94,8 @@ def course_series():
 #         return jsonify(returnObj)
 
 #我的课程
-@sign_check()
 @course.route('/course/me', methods=['GET'])
+@sign_check()
 def course_me():
     from models.user import USER
     returnObj = {}
@@ -119,8 +119,8 @@ def course_me():
         return jsonify(returnObj)
 
 #提交作业
-@sign_check()
 @course.route('/course/<courseId>/<uid>', methods=['POST'])
+@sign_check()
 def homework_put(courseId, uid):
     from models.user import USER
     import time
@@ -148,9 +148,9 @@ def homework_put(courseId, uid):
         return jsonify(returnObj)
 
 #课程内容
-@sign_check()
-# @Oid_check()
 @course.route('/course/<courseId>', methods=['GET'])
+# @Oid_check()
+@sign_check()
 def course_detail(courseId):
     import hashlib
     import json
@@ -207,8 +207,9 @@ def course_detail(courseId):
             sha = hashlib.sha1()
             userid = session.get('id')
             sha.update(userid.encode('utf-8'))
-            sha.update(str(courseId).encode('utf-8'))
+            sha.update(uid.encode('utf-8'))
             Oid = sha.hexdigest()[0:16]
+            print("Oid =", Oid)
             data_user = USER.objects(id=ObjectId(session['id'])).first()
             data_Oid = data_user.envlink
             # 检查某环境是否已经存在，若存在则直接调用地址
@@ -219,17 +220,29 @@ def course_detail(courseId):
                 # result = ws.recv()
                 # 使用生成的Oid获取Cid
                 url = 'http://api.datadynamic.io/api/v1/instance/' + Oid + '/eureka'
-                req = urllib.request.Request(url=url, data={})
-                res = urllib.request.urlopen(req)
-                res = json.loads(res.read())[0]
-                print(res)
+                try:
+                    req = urllib.request.Request(url=url, data={}, method='POST')
+                    res = urllib.request.urlopen(req)
+                    res = json.loads(res.read())[0]
+                except urllib.error.HTTPError as e:
+                    if e.reason == "Bad Request":
+                        req = urllib.request.Request(url=url, data={}, method='DELETE')
+                        urllib.request.urlopen(req)
+                        print('Cid clear!')
+                        req = urllib.request.Request(url=url, data={}, method='POST')
+                        res = urllib.request.urlopen(req)
+                        res = json.loads(res.read())[0]
+                # print(res)
                 Cid = res['id'][0:16]
                 expires_at = res['expires_at']
                 expire = expires_at[0:10] + ' ' + expires_at[11:19]
                 # 拼接出环境地址存入数据库并发送至前端
                 link = 'http://' + Cid + '-8888-env1.env.datadynamic.io/notebooks/Welcome.ipynb'
-                envObj = {Oid: [link, expire]}
-                USER.objects(id=ObjectId(session['id'])).update_one(envlink=envObj)
+            # link = 'http://localhost:8888/notebooks/Welcome.ipynb'
+            # expire = '2022-01-01 00:00'
+            # Oid = 'localtest'
+                data_Oid[Oid] = [link, expire]
+                USER.objects(id=ObjectId(session['id'])).update_one(envlink=data_Oid)
             returnObj['env'] = {'envname': envname, 'envlink': link}
             # print(link)
     except Exception as e:

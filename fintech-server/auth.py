@@ -1,4 +1,4 @@
-from flask import session, jsonify
+from flask import session, jsonify, redirect
 from functools import wraps
 from models.user import USER
 import time
@@ -12,7 +12,7 @@ def sign_check():
                 if 'username' not in session:
                     returnObj['data'] = {}
                     returnObj['info'] = {"result": "400", "info": "请登录后进行操作"}
-                    return jsonify(returnObj)
+                    return redirect('/login')
                 print('check session success!')
             except Exception as e:
                 print("sign_check's error:", e)

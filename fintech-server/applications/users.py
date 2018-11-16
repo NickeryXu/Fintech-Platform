@@ -23,19 +23,20 @@ def user_login():
             session['username'] = data_user.username
             returnObj['data'] = {}
             returnObj['info'] = {'result': 1, 'info': '登陆成功'}
+            return redirect('/course')
         else:
             returnObj['data'] = {}
             returnObj['info'] = {'result': 400, 'info': '登录失败'}
+            return render_template('400.html', info=returnObj['info'])
     except Exception as e:
         print('user_login:', e)
         returnObj['data'] = {}
         returnObj['info'] = {'result': 500, 'info': '后台异常'}
-    finally:
-        return redirect('/course')
+        return render_template('500.html', info=returnObj['info'])
 
 #获取当前用户
-@sign_check()
 @user.route('/users/me', methods=['GET'])
+@sign_check()
 def user_me():
     from models.user import USER
     returnObj = {}
@@ -101,8 +102,8 @@ def create_user():
         return jsonify(returnObj)
 
 #更改当前用户
-@sign_check()
 @user.route('/users/change', methods=['PUT'])
+@sign_check()
 def change_one():
     from models.user import USER
     returnObj = {}
