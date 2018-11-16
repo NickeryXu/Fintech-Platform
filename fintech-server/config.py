@@ -1,8 +1,10 @@
-HOST = "0.0.0.0"
+HOST = "192.168.0.167"
 PORT = 8005
 DEBUG = True
-MONGODB_HOST = "localhost"
-MONGODB_PORT = 27017
+MONGODB_HOST = "testland.orientsoft.cn"
+MONGODB_PORT = 38213
+USERNAME = "nickery"
+PASSWORD = "Xyl940131"
 DATABASE = "fintech"
 LOGPATH = "./fitech_log"
 SECRET_KEY = 'abcdefg'

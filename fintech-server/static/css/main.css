@@ -1,4 +1,36 @@
 /* html,nav.transparent{background: #292929;} */
+html,body{ position: relative;}
+.image-header {background: linear-gradient(#3374FF 60%, #363b3e 40%) !important;}
+.masthead__video-container {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    z-index: -1;
+    overflow: hidden;
+    /* background-size: cover; */
+    background-image: url(../images/helloworld.jpg);
+    background-position:center;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+}
+.masthead__video {
+    transform: translateX(-50%) translateY(-50%);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+}
+.main-container.indexbox{  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;}
+  nav.transparent .nav-bar{ border: none; }
+  .navbar-default.indextopbg{     background-color: rgba(0,0,0,0) !important}
+
 .image-header {background: linear-gradient(#3374FF 60%, #363b3e 40%) !important;}
   nav.transparent .nav-bar{ border: none; }
 .menu li a{ font-size: 16px;}
@@ -96,7 +128,7 @@ h3.uppercase {
 .form-group {
     margin-bottom: 35px;
 }
-a.text-primary,a.text-primary:hover,a.text-primar:focus{ color: #5edcd0}
+a.text-primary,a.text-primary:hover,a.text-primary:focus{ color: #00AEAE}
 .fade-half{ color: rgba(255, 255, 255, 0.56)}
 hr{    border-top: 1px solid  rgba(255, 255, 255, 0.16); margin-top: 0}
 .bg-white{ background: #fff; color: #666}

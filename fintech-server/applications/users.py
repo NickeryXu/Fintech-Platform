@@ -34,6 +34,7 @@ def user_login():
         returnObj['info'] = {'result': 500, 'info': '后台异常'}
         return render_template('500.html', info=returnObj['info'])
 
+
 #获取当前用户
 @user.route('/users/me', methods=['GET'])
 @sign_check()
